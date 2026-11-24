@@ -40,7 +40,7 @@ Erzeuge bei jeder Wochenplanung **genau eine** JSON-Datei nach diesem Schema. Nu
 - **Größe: ≤ 6 KB anstreben, maximal 8 KB.** Lieber kurze Details als lange Sätze.
 - Keine weiteren Felder erfinden (die App ignoriert sie, sie kosten nur Platz).
 - Ganze Zahlen ohne Anführungszeichen (`70`, nicht `"70"`).
-- Zeichen wie `–`, `×`, `·`, `'` und Umlaute sind erlaubt.
+- **Sonderzeichen:** erlaubt sind Umlaute, `ß`, `×`, `·`, `°`, `'`, `–`, `—`, `„ “`, `…`, `•`. **Keine Pfeile oder Symbole** wie `→`, `⟷`, `↔`, `≥`, Emojis – die Uhr zeigt sie als Kästchen. Stattdessen `->`, `/`, `>=` schreiben (z. B. „Klimmzug / Dips“).
 - Maximal 3 Einheiten pro Tag.
 - Vor dem Speichern prüfen: `python validate_plan.py docs/plan.json`.
 

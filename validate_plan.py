@@ -18,6 +18,9 @@ SPORTS = {"rad", "lauf", "kraft", "pump", "padel", "schwimmen", "sonstiges"}
 TOP_FIELDS = {"schemaVersion", "updated", "week", "weekType", "weekNote", "days"}
 DAY_FIELDS = {"date", "dayType", "kcal", "protein", "sessions"}
 SESSION_FIELDS = {"sport", "title", "workout", "durationMin", "target", "fuel", "details", "optional"}
+# Zeichen, die die Uhr-Schrift sicher kann: Latin-1 plus einige typografische Zeichen.
+# Pfeile (→ ⟷), Emojis usw. erscheinen auf der Uhr als Kästchen.
+EXTRA_CHARS = set("–—‘’‚“”„•…′€")
 MAX_TITLE = 22
 MAX_DETAIL = 35
 MAX_TEXT = 90
@@ -39,6 +42,11 @@ def is_int(v):
     return isinstance(v, int) and not isinstance(v, bool)
 
 
+def bad_chars(text):
+    return sorted({c for c in text
+                   if not (" " <= c <= "~" or " " <= c <= "ÿ" or c in EXTRA_CHARS)})
+
+
 def check_text(r, where, value, required=False, max_len=MAX_TEXT):
     if value is None:
         if required:
@@ -47,6 +55,10 @@ def check_text(r, where, value, required=False, max_len=MAX_TEXT):
     if not isinstance(value, str) or not value.strip():
         r.err(where, "muss ein nicht-leerer Text sein")
         return
+    bad = bad_chars(value)
+    if bad:
+        shown = ", ".join(f"'{c}' (U+{ord(c):04X})" for c in bad)
+        r.err(where, f"Zeichen {shown} kann die Uhr nicht anzeigen (Kästchen) – z. B. '/' oder '->' verwenden")
     if len(value) > max_len:
         r.warn(where, f"{len(value)} Zeichen – auf der Uhr besser ≤ {max_len}")
 
