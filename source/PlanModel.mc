@@ -2,11 +2,12 @@ import Toybox.Application;
 import Toybox.Lang;
 import Toybox.WatchUi;
 
-// Hält den aktiven Plan, filtert vergangene Tage und erzeugt die Glance-Kurzfassung.
+// Hält den aktiven Plan (Vordergrund) und bereitet ihn für die Ansichten auf.
 class PlanModel {
 
     var plan = null;        // Dictionary aus plan.json oder null
-    var days = [];          // Array von [JJJJMMTT, Tag-Dictionary], sortiert, nur ab heute
+    var allDays = [];       // Array von [JJJJMMTT, Tag-Dictionary], sortiert, alle Tage
+    var days = [];          // wie allDays, aber nur ab heute (für die Tagesansicht)
     var todayKey = 0;
     var todayIndex = -1;    // Index von heute in days, -1 wenn heute fehlt
     var isExample = false;  // true = eingebetteter Beispielplan (noch keine URL)
@@ -21,7 +22,7 @@ class PlanModel {
         var p = Application.Storage.getValue("plan");
         if (!isValid(p)) {
             p = null;
-            if (PlanSync.planUrl() == null) {
+            if (PlanData.planUrl() == null) {
                 p = WatchUi.loadResource(Rez.JsonData.ExamplePlan);
                 if (isValid(p)) {
                     isExample = true;
@@ -38,15 +39,14 @@ class PlanModel {
         return p["days"] instanceof Array;
     }
 
-    // Plan speichern und Glance-Kurzfassung neu erzeugen
     function save(p) as Void {
         isExample = false;
-        Application.Storage.setValue("plan", p);
-        Application.Storage.setValue("glance", buildGlance(p));
+        PlanData.store(p);
     }
 
     function setPlan(p) as Void {
         plan = p;
+        allDays = [];
         days = [];
         todayKey = TP.todayKey();
         todayIndex = -1;
@@ -58,7 +58,7 @@ class PlanModel {
             var d = src[i];
             if (!(d instanceof Dictionary)) { continue; }
             var k = TP.dateKey(d["date"]);
-            if (k == null || k < todayKey) { continue; }   // vergangene Tage ausblenden
+            if (k == null) { continue; }
             tmp.add([k, d]);
         }
         // nach Datum sortieren (Insertion Sort, max. 14 Einträge)
@@ -71,14 +71,26 @@ class PlanModel {
             }
             tmp[j + 1] = x;
         }
-        days = tmp;
-        for (var i = 0; i < days.size(); i++) {
-            if (days[i][0] == todayKey) { todayIndex = i; }
+        allDays = tmp;
+        for (var i = 0; i < allDays.size(); i++) {
+            var k = allDays[i][0] as Number;
+            if (k >= todayKey) {          // vergangene Tage ausblenden
+                if (k == todayKey) { todayIndex = days.size(); }
+                days.add(allDays[i]);
+            }
         }
     }
 
     function startIndex() as Number {
         return (todayIndex >= 0) ? todayIndex : 0;
+    }
+
+    // Tag-Dictionary für ein Datum oder null
+    function dayFor(key as Number) as Dictionary or Null {
+        for (var i = 0; i < allDays.size(); i++) {
+            if (allDays[i][0] == key) { return allDays[i][1] as Dictionary; }
+        }
+        return null;
     }
 
     // Deutlicher Hinweis, wenn der Plan veraltet ist oder heute fehlt; sonst null
@@ -93,26 +105,13 @@ class PlanModel {
         if (todayIndex < 0) {
             if (days.size() == 0) {
                 parts.add("Plan abgelaufen");
-            } else if (hasPastDays()) {
+            } else if ((allDays[0][0] as Number) < todayKey) {
                 parts.add("Heute nicht im Plan");
             } else {
                 parts.add("Plan beginnt am " + Fmt.date(days[0][0] as Number));
             }
         }
         return Fmt.join(parts, " · ");
-    }
-
-    // true, wenn der Plan Tage vor heute enthält (dann ist heute eine Lücke)
-    hidden function hasPastDays() as Boolean {
-        var src = plan["days"] as Array;
-        for (var i = 0; i < src.size(); i++) {
-            var d = src[i];
-            if (d instanceof Dictionary) {
-                var k = TP.dateKey(d["date"]);
-                if (k != null && k < todayKey) { return true; }
-            }
-        }
-        return false;
     }
 
     // "Stand: 22.11., 18:30"
@@ -125,40 +124,5 @@ class PlanModel {
             s += ", " + u.substring(11, 16);
         }
         return s;
-    }
-
-    // Kurzfassung je Tag für die Glance:
-    // { "JJJJMMTT" => { "s" => [[farbe, titel, untertitel, kurz], ...] } }
-    function buildGlance(p) as Dictionary {
-        var out = {};
-        var today = TP.todayKey();
-        var src = p["days"] as Array;
-        for (var i = 0; i < src.size(); i++) {
-            var d = src[i];
-            if (!(d instanceof Dictionary)) { continue; }
-            var k = TP.dateKey(d["date"]);
-            if (k == null || k < today) { continue; }
-            var list = [];
-            var ss = d["sessions"];
-            if (ss instanceof Array) {
-                for (var j = 0; j < ss.size(); j++) {
-                    var s = ss[j];
-                    if (!(s instanceof Dictionary)) { continue; }
-                    var title = Fmt.str(s, "title");
-                    if (title == null) { title = "Training"; }
-                    var wo = Fmt.str(s, "workout");
-                    var dur = Fmt.duration(Fmt.num(s, "durationMin"));
-                    var sub = Fmt.join([wo, dur], " · ");
-                    var shortTxt = Fmt.join([(wo != null) ? wo : title, dur], " · ");
-                    if (s["optional"] == true) {
-                        title = "(opt.) " + title;
-                        shortTxt = "(opt.) " + shortTxt;
-                    }
-                    list.add([TP.sportColor(s["sport"]), title, (sub == null) ? "" : sub, shortTxt]);
-                }
-            }
-            out[k.toString()] = { "s" => list };
-        }
-        return out;
     }
 }

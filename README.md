@@ -55,9 +55,13 @@ Jede App wird mit deinem persönlichen Schlüssel signiert. **Gut aufheben** –
 | Wischen nach links / rechts | nächster / vorheriger Tag |
 | Wischen nach oben / unten | Tagesansicht scrollen |
 | START oder Tippen | Detailansicht mit Anleitung und Verpflegung – dort scrollen hoch/runter den Inhalt |
-| ZURÜCK | Detailansicht schließen bzw. App beenden |
+| MENU (Taste hoch lang drücken) | Menü: **Wochenübersicht** · **Aktualisieren** |
+| ZURÜCK | Detail-/Wochenansicht schließen bzw. App beenden |
 
-Tage vor heute werden ausgeblendet. Ist der Plan älter als 7 Tage oder fehlt heute, erscheint ein roter Hinweis.
+- Tage vor heute werden ausgeblendet. Ist der Plan älter als 7 Tage, fehlt heute oder beginnt er erst später, erscheint ein roter Hinweis.
+- **Wochenübersicht:** laufende Kalenderwoche Mo–So mit Wochentyp, Notiz und einem Kurzlabel pro Tag; heute ist gelb markiert, vergangene Tage grau, optionale Einheiten in Klammern.
+- **Aktualisieren:** lädt den Plan sofort neu und meldet das Ergebnis kurz.
+- **Automatisch:** beim Öffnen der App und im Hintergrund alle 6 Stunden (sofern das Handy verbunden ist).
 
 ## 4. Projektstruktur
 
@@ -65,17 +69,33 @@ Tage vor heute werden ausgeblendet. Ist der Plan älter als 7 Tage oder fehlt he
 manifest.xml                 App-Typ (watch-app mit Glance), Gerät fr265, Sprache
 monkey.jungle                Build-Konfiguration
 source/
-  TrainingsplanApp.mc        Einstieg, liefert Glance und Tagesansicht
+  TrainingsplanApp.mc        Einstieg: Glance, Tagesansicht, Hintergrund-Registrierung
   TrainingsplanGlanceView.mc Glance (liest nur eine kleine Kurzfassung, 64-KB-Limit)
-  PlanModel.mc               Plan laden/speichern, Tage filtern, Hinweise
-  DayView.mc                 Tagesansicht, Detailansicht, Navigation
-  Common.mc                  Farben je Sport, Datum (auch für die Glance)
+  PlanModel.mc               Plan im Vordergrund: Tage filtern, Hinweise, Stand
+  PlanData.mc                Plan prüfen/speichern, Glance-Daten (auch im Hintergrund)
+  PlanSync.mc                Laden beim Öffnen und per Menü „Aktualisieren“
+  PlanServiceDelegate.mc     Hintergrund-Sync alle 6 h
+  ScrollView.mc              Basis für scrollbare Ansichten (rundes Display)
+  DayView.mc                 Tages-/Detailansicht, Menü, Tastensteuerung
+  WeekView.mc                Wochenübersicht
+  Common.mc                  Farben je Sport, Datum (Glance + Hintergrund)
   Fmt.mc                     Formatierung, Zeilenumbruch, Datumsrechnung
 resources/
-  jsonData/example-plan.json eingebetteter Beispielplan (MVP)
-  settings/                  App-Einstellungen
-example-plan.json            Beispielwoche (Kopie, für Validierung/Upload)
+  jsonData/example-plan.json eingebetteter Beispielplan (wenn keine URL gesetzt)
+  settings/                  App-Einstellungen (Plan-URL, kcal/Protein, Testdatum)
+docs/plan.json               aktueller Plan – wird über GitHub Pages ausgeliefert
+plans/                       Archiv der Wochenpläne
+PLAN_SCHEMA.md               Spezifikation für Claude
+validate_plan.py             Prüfskript vor dem Upload
+example-plan.json            Beispielwoche
+CLAUDE.md                    Arbeitsanweisungen für Claude (Wochenplanung)
 ```
+
+### Plan prüfen
+```
+python validate_plan.py docs/plan.json
+```
+Prüft JSON, Pflichtfelder, erlaubte Werte, Textlängen, Datumslogik (aufsteigend, ohne Lücken, Montag, KW) und Größe (Ziel ≤ 6 KB, max. 8 KB). FEHLER = nicht hochladen, WARNUNG = ansehen.
 
 ## 5. Hosting und wöchentliches Update
 
@@ -98,12 +118,31 @@ Claude (Planung) ──git push──▶ GitHub-Repo  docs/plan.json
 2. In PowerShell `gh auth login` → GitHub.com → HTTPS → „Login with a web browser“ → Code im Browser bestätigen.
 3. Repo anlegen und pushen (macht Claude): `gh repo create trainingsplan --public --source . --push`.
 4. Pages aktivieren (macht Claude per `gh api`): Branch `main`, Ordner `/docs`.
-5. Plan-URL in die App eintragen: im Simulator über den App Settings Editor, auf der Uhr über Garmin Connect → Geräte → Forerunner 265 → Connect IQ-Apps → Trainingsplan → Einstellungen (nur bei Installation über den Store/Beta, siehe Schritt 4).
+5. Plan-URL: ist als Standard in der App eingebaut (`https://saorus.github.io/trainingsplan/plan.json`). Ändern nur nötig, wenn sich die Adresse ändert – im Simulator über den App Settings Editor, auf der Uhr über Garmin Connect (nur bei Installation als Beta-App, siehe Abschnitt 7).
 
 ### Jede Woche
 - **Am PC:** In der Claude-Desktop-App (Code-Tab) diesen Ordner öffnen und „Plane KW nn“ sagen. Claude schreibt `docs/plan.json`, prüft sie, zeigt die Übersicht und pusht nach deinem OK (siehe `CLAUDE.md`).
 - **Am Handy:** <https://claude.ai/code> → Repo `trainingsplan` wählen → gleich wie am PC.
 - **Manuell (Notfall):** auf github.com `docs/plan.json` öffnen → Stift → Inhalt ersetzen → „Commit changes“.
 
-## 6. Noch offen (folgt)
-- Schritt 4: Wochenübersicht, Menü „Aktualisieren“, Hintergrund-Sync, `PLAN_SCHEMA.md`, `validate_plan.py`, Sideload per USB, Beta-Upload.
+## 6. Auf die Uhr bringen (USB-Sideload)
+
+1. In VS Code `Strg+Umschalt+P` → **„Monkey C: Build for Device“** → **Forerunner 265** → einen Ausgabeordner wählen (z. B. `bin`). Ergebnis: `Trainingsplan.prg`.
+   (Alternativ liegt nach jedem Build von Claude eine aktuelle `bin\Trainingsplan.prg` bereit.)
+2. Uhr per USB-Kabel am PC anschließen. Im Explorer erscheint **„Forerunner 265“** (ggf. am Handy/Uhr „Datenübertragung“ bestätigen).
+3. Öffnen: **Forerunner 265 → Internal Storage → GARMIN → APPS**.
+4. `Trainingsplan.prg` in diesen Ordner kopieren.
+5. Uhr vom PC trennen (im Explorer „Auswerfen“). Die Uhr installiert die App beim Trennen.
+6. Auf der Uhr: Glance-Loop öffnen (vom Zifferblatt hoch/runter) → ganz unten **Bearbeiten/Hinzufügen** → **Trainingsplan** hinzufügen. Die App ist außerdem über START → Apps/Aktivitäten-Liste bzw. das Apps-Menü erreichbar.
+7. Das Handy muss mit der Uhr gekoppelt und Garmin Connect aktiv sein – darüber lädt die App den Plan.
+
+**Update:** neue `Trainingsplan.prg` einfach erneut in `GARMIN\APPS` kopieren (gleicher Developer Key nötig).
+**Hinweis:** Bei Sideload sind die App-Einstellungen in Garmin Connect nicht verfügbar – daher ist die Plan-URL als Standard eingebaut.
+
+## 7. Optional: private Beta-App (Einstellungen in Garmin Connect)
+
+Nur nötig, wenn du die Einstellungen (Plan-URL, kcal/Protein ein/aus) am Handy ändern willst.
+1. In VS Code: **„Monkey C: Export Project“** → erzeugt eine `.iq`-Datei.
+2. <https://apps.garmin.com/developer/upload> öffnen (mit Garmin-Konto anmelden) → `.iq` hochladen → als **Beta-App** markieren. Beta-Apps sind nur für dein eigenes Konto sichtbar.
+3. Am Handy in der Garmin Connect App / Connect IQ Store die Beta-App installieren; vorher die per USB installierte Version von der Uhr löschen.
+4. Vor dem Upload die Test-Einstellung „Testdatum“ aus `resources/settings/settings.xml` entfernen (Claude erledigt das auf Zuruf).

@@ -8,8 +8,8 @@ Die Uhr lädt `docs/plan.json` über GitHub Pages. **Das Repo ist öffentlich** 
 Wenn ich eine neue Woche planen will:
 
 1. Plan gemeinsam mit mir besprechen (Kontext unten, letzte Woche in `docs/plan.json` bzw. `plans/`).
-2. `docs/plan.json` neu schreiben – exakt nach dem Schema unten (ab Schritt 4: `PLAN_SCHEMA.md`).
-3. Prüfen: `python validate_plan.py docs/plan.json` (sobald vorhanden). Ohne Python mindestens: gültiges JSON, Größe ≤ 6 KB.
+2. `docs/plan.json` neu schreiben – exakt nach `PLAN_SCHEMA.md`.
+3. Prüfen: `python validate_plan.py docs/plan.json`.
 4. Mir eine kurze Übersicht zeigen (Tag · Einheiten · Dauer) und auf mein OK warten.
 5. Nach OK: Kopie als `plans/JJJJ-KWnn.json` ablegen, dann
    `git add docs/plan.json plans/` → `git commit -m "Plan KW nn"` → `git push`.
@@ -17,17 +17,10 @@ Wenn ich eine neue Woche planen will:
 
 Nie ohne mein OK pushen. Nie App-Code ändern, wenn ich nur einen Plan will.
 
-## Schema plan.json (Kurzfassung, schemaVersion 1)
+## Schema plan.json
 
-- Oben: `schemaVersion` (1), `updated` ("JJJJ-MM-TTTHH:MM", Ortszeit Wien), `week` ("KW 49"),
-  `weekType` (normal | plus | minimum | entlastung | reise | taper), `weekNote` (optional, kurz)
-- `days[]`: 7–14 Tage, aufsteigend, je `date` ("JJJJ-MM-TT"), `dayType` (z. B. "Ruhetag", "Q-Rad-Tag"),
-  optional `kcal`, `protein` (g), `sessions[]` (leer = frei)
-- `sessions[]`: `sport` (rad | lauf | kraft | pump | padel | schwimmen | sonstiges), `title`,
-  optional `workout` ("Zwift 06", "R1", "K2"), `durationMin` (Zahl), `target` (Watt/Puls als Text),
-  `fuel` (Verpflegung), `details[]` (kurze Zeilen = Anleitung), `optional` (true = optionale Einheit)
-- Kurze Texte (Uhr hat ein rundes 416-px-Display): Titel ≤ 22 Zeichen, Detailzeilen ≤ 35 Zeichen.
-- Größe: Ziel ≤ 6 KB, hart ≤ 8 KB. Vollständiges Beispiel: `example-plan.json`.
+Verbindlich ist **`PLAN_SCHEMA.md`** (Felder, erlaubte Werte, Längen, Größe ≤ 6 KB / max. 8 KB, Beispiel).
+Prüfen mit `python validate_plan.py docs/plan.json` – bei FEHLER nicht pushen, WARNUNGEN mir nennen.
 
 ## Trainingskontext
 

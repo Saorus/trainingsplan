@@ -1,7 +1,8 @@
 <resources>
     <properties>
-        <!-- HTTPS-Adresse der plan.json (GitHub Pages o. ä.). Leer = Beispielplan. -->
-        <property id="planUrl" type="string"></property>
+        <!-- HTTPS-Adresse der plan.json. Als Standard eingebaut, damit es auch per USB-Sideload
+             (ohne Einstellungen in Garmin Connect) funktioniert. Leer = Beispielplan. -->
+        <property id="planUrl" type="string">https://saorus.github.io/trainingsplan/plan.json</property>
         <property id="showNutrition" type="boolean">true</property>
         <!-- Nur zum Testen: "JJJJ-MM-TT" setzt das heutige Datum. Leer = echtes Datum. -->
         <property id="debugToday" type="string"></property>

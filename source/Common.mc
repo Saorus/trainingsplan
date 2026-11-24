@@ -4,9 +4,9 @@ import Toybox.Lang;
 import Toybox.Time;
 import Toybox.Time.Gregorian;
 
-// Hilfsfunktionen, die auch in der Glance (64 KB) gebraucht werden.
-// Alles hier muss klein bleiben.
-(:glance)
+// Hilfsfunktionen, die auch in der Glance und im Hintergrundprozess (je 64 KB)
+// gebraucht werden. Alles hier muss klein bleiben.
+(:glance, :background)
 module TP {
 
     // Farbe je Sportart (AMOLED, dunkler Hintergrund)

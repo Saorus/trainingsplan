@@ -1,7 +1,7 @@
 <resources>
     <settings>
         <setting propertyKey="@Properties.planUrl" title="@Strings.SetPlanUrl" prompt="@Strings.SetPlanUrlPrompt">
-            <settingConfig type="url"/>
+            <settingConfig type="alphaNumeric"/>
         </setting>
         <setting propertyKey="@Properties.showNutrition" title="@Strings.SetShowNutrition">
             <settingConfig type="boolean"/>

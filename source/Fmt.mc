@@ -1,7 +1,8 @@
 import Toybox.Graphics;
 import Toybox.Lang;
 
-// Formatierung und Datumsrechnung (nur Haupt-App, nicht Glance)
+// Formatierung und Datumsrechnung (Haupt-App und Hintergrundprozess, nicht Glance)
+(:background)
 module Fmt {
 
     const WEEKDAYS = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
@@ -35,6 +36,21 @@ module Fmt {
         var doy = (153 * mp + 2) / 5 + d - 1;
         var doe = yoe * 365 + yoe / 4 - yoe / 100 + doy;
         return era * 146097 + doe - 719468;
+    }
+
+    // Tage seit 1970-01-01 -> JJJJMMTT
+    function keyFromDayNum(z as Number) as Number {
+        z += 719468;
+        var era = z / 146097;
+        var doe = z - era * 146097;
+        var yoe = (doe - doe / 1460 + doe / 36524 - doe / 146096) / 365;
+        var y = yoe + era * 400;
+        var doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
+        var mp = (5 * doy + 2) / 153;
+        var d = doy - (153 * mp + 2) / 5 + 1;
+        var m = (mp < 10) ? mp + 3 : mp - 9;
+        if (m <= 2) { y += 1; }
+        return y * 10000 + m * 100 + d;
     }
 
     // 0 = Montag ... 6 = Sonntag
