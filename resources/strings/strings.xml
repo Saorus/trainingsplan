@@ -1,0 +1,9 @@
+<resources>
+    <strings>
+        <string id="AppName">Trainingsplan</string>
+        <string id="SetPlanUrl">Plan-URL (https://…/plan.json)</string>
+        <string id="SetPlanUrlPrompt">Adresse der plan.json eingeben</string>
+        <string id="SetShowNutrition">Tagestyp, kcal und Protein anzeigen</string>
+        <string id="SetDebugToday">Testdatum JJJJ-MM-TT (leer = heute)</string>
+    </strings>
+</resources>

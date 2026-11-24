@@ -1,0 +1,9 @@
+<resources>
+    <properties>
+        <!-- HTTPS-Adresse der plan.json (GitHub Pages o. ä.). Leer = Beispielplan. -->
+        <property id="planUrl" type="string"></property>
+        <property id="showNutrition" type="boolean">true</property>
+        <!-- Nur zum Testen: "JJJJ-MM-TT" setzt das heutige Datum. Leer = echtes Datum. -->
+        <property id="debugToday" type="string"></property>
+    </properties>
+</resources>

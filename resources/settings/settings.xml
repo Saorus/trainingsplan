@@ -1,0 +1,14 @@
+<resources>
+    <settings>
+        <setting propertyKey="@Properties.planUrl" title="@Strings.SetPlanUrl" prompt="@Strings.SetPlanUrlPrompt">
+            <settingConfig type="url"/>
+        </setting>
+        <setting propertyKey="@Properties.showNutrition" title="@Strings.SetShowNutrition">
+            <settingConfig type="boolean"/>
+        </setting>
+        <!-- Nur für Tests im Simulator; wird vor dem Beta-Upload entfernt -->
+        <setting propertyKey="@Properties.debugToday" title="@Strings.SetDebugToday">
+            <settingConfig type="alphaNumeric"/>
+        </setting>
+    </settings>
+</resources>

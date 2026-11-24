@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-11-22T18:30",
+  "week": "KW 48",
+  "weekType": "normal",
+  "weekNote": "Grundlage I – Sweet Spot Stufe 1",
+  "days": [
+    { "date": "2026-11-23", "dayType": "Trainingstag", "kcal": 2400, "protein": 140,
+      "sessions": [
+        { "sport": "lauf", "title": "Lauf locker", "durationMin": 30, "target": "Z2 136–149 bpm" },
+        { "sport": "kraft", "title": "Kraft 2", "workout": "K2", "durationMin": 50,
+          "details": ["Schrägbank KH 3×8–12", "Rudern Kabel 3×10–12", "Bulg. Split Squat 3×8", "Plank 3×45 s"] }
+      ] },
+    { "date": "2026-11-24", "dayType": "Q-Rad-Tag", "kcal": 2400, "protein": 140,
+      "sessions": [
+        { "sport": "rad", "title": "Q1 Sweet Spot 2×15", "workout": "Zwift 05", "durationMin": 60,
+          "target": "151–162 W (Zwift 158–169 W)",
+          "fuel": "KH-Mahlzeit 2–3 h vorher · Iso 50–60 g + Wasser",
+          "details": ["10' einfahren, 3×1' Steigerung", "2×15' Sweet Spot, 5' locker", "10' ausfahren", "Kadenz 85–95"] }
+      ] },
+    { "date": "2026-11-25", "dayType": "Trainingstag", "kcal": 2300, "protein": 140,
+      "sessions": [
+        { "sport": "lauf", "title": "Lauf Grundlage", "durationMin": 45, "target": "Z2 136–149 bpm",
+          "details": ["Letzte 5' leicht steigern"] },
+        { "sport": "pump", "title": "Body Pump", "durationMin": 55, "optional": true }
+      ] },
+    { "date": "2026-11-26", "dayType": "Ruhetag", "kcal": 2200, "protein": 140, "sessions": [] },
+    { "date": "2026-11-27", "dayType": "Trainingstag", "kcal": 2400, "protein": 140,
+      "sessions": [
+        { "sport": "rad", "title": "Rad locker", "workout": "R1", "durationMin": 60,
+          "target": "Z2 120–140 W", "fuel": "Wasser, ggf. Iso 30 g" },
+        { "sport": "kraft", "title": "Kraft 1", "workout": "K1", "durationMin": 45,
+          "details": ["Kniebeuge 3×8", "Rumän. Kreuzheben 3×10", "Klimmzug 3×max"] }
+      ] },
+    { "date": "2026-11-28", "dayType": "Q-Rad-Tag", "kcal": 2800, "protein": 140,
+      "sessions": [
+        { "sport": "rad", "title": "Lange Grundlage", "workout": "Zwift 09", "durationMin": 150,
+          "target": "Z2 125–145 W",
+          "fuel": "60–70 g KH/h · 500–750 ml/h · Frühstück 3 h vorher",
+          "details": ["Gleichmäßig, keine Spitzen", "Alle 20' essen/trinken"] }
+      ] },
+    { "date": "2026-11-29", "dayType": "Trainingstag", "kcal": 2500, "protein": 140,
+      "sessions": [
+        { "sport": "padel", "title": "Padel", "durationMin": 90 },
+        { "sport": "schwimmen", "title": "Technik Schwimmen", "durationMin": 30,
+          "target": "locker, Technik", "details": ["4×50 m Abschlag", "4×50 m Kraul ruhig"] }
+      ] }
+  ]
+}
