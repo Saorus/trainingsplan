@@ -1,49 +1,23 @@
 {
-  "schemaVersion": 1,
-  "updated": "2026-11-22T18:30",
-  "week": "KW 48",
-  "weekType": "normal",
-  "weekNote": "Grundlage I – Sweet Spot Stufe 1",
-  "days": [
-    { "date": "2026-11-23", "dayType": "Trainingstag", "kcal": 2400, "protein": 140,
-      "sessions": [
-        { "sport": "lauf", "title": "Lauf locker", "durationMin": 30, "target": "Z2 136–149 bpm" },
-        { "sport": "kraft", "title": "Kraft 2", "workout": "K2", "durationMin": 50,
-          "details": ["Schrägbank KH 3×8–12", "Rudern Kabel 3×10–12", "Bulg. Split Squat 3×8", "Plank 3×45 s"] }
-      ] },
-    { "date": "2026-11-24", "dayType": "Q-Rad-Tag", "kcal": 2400, "protein": 140,
-      "sessions": [
-        { "sport": "rad", "title": "Q1 Sweet Spot 2×15", "workout": "Zwift 05", "durationMin": 60,
-          "target": "151–162 W (Zwift 158–169 W)",
-          "fuel": "KH-Mahlzeit 2–3 h vorher · Iso 50–60 g + Wasser",
-          "details": ["10' einfahren, 3×1' Steigerung", "2×15' Sweet Spot, 5' locker", "10' ausfahren", "Kadenz 85–95"] }
-      ] },
-    { "date": "2026-11-25", "dayType": "Trainingstag", "kcal": 2300, "protein": 140,
-      "sessions": [
-        { "sport": "lauf", "title": "Lauf Grundlage", "durationMin": 45, "target": "Z2 136–149 bpm",
-          "details": ["Letzte 5' leicht steigern"] },
-        { "sport": "pump", "title": "Body Pump", "durationMin": 55, "optional": true }
-      ] },
-    { "date": "2026-11-26", "dayType": "Ruhetag", "kcal": 2200, "protein": 140, "sessions": [] },
-    { "date": "2026-11-27", "dayType": "Trainingstag", "kcal": 2400, "protein": 140,
-      "sessions": [
-        { "sport": "rad", "title": "Rad locker", "workout": "R1", "durationMin": 60,
-          "target": "Z2 120–140 W", "fuel": "Wasser, ggf. Iso 30 g" },
-        { "sport": "kraft", "title": "Kraft 1", "workout": "K1", "durationMin": 45,
-          "details": ["Kniebeuge 3×8", "Rumän. Kreuzheben 3×10", "Klimmzug 3×max"] }
-      ] },
-    { "date": "2026-11-28", "dayType": "Q-Rad-Tag", "kcal": 2800, "protein": 140,
-      "sessions": [
-        { "sport": "rad", "title": "Lange Grundlage", "workout": "Zwift 09", "durationMin": 150,
-          "target": "Z2 125–145 W",
-          "fuel": "60–70 g KH/h · 500–750 ml/h · Frühstück 3 h vorher",
-          "details": ["Gleichmäßig, keine Spitzen", "Alle 20' essen/trinken"] }
-      ] },
-    { "date": "2026-11-29", "dayType": "Trainingstag", "kcal": 2500, "protein": 140,
-      "sessions": [
-        { "sport": "padel", "title": "Padel", "durationMin": 90 },
-        { "sport": "schwimmen", "title": "Technik Schwimmen", "durationMin": 30,
-          "target": "locker, Technik", "details": ["4×50 m Abschlag", "4×50 m Kraul ruhig"] }
-      ] }
-  ]
+ "schemaVersion":1,
+ "updated":"2026-11-24T16:42",
+ "week":"KW 48",
+ "weekType":"normal",
+ "weekNote":"Aufbau Wo 2 · KW 49 FTP-Test (Vorschau)",
+ "days":[
+  {"date":"2026-11-23","dayType":"Trainingstag","kcal":2400,"protein":140,"sessions":[{"sport":"lauf","title":"Lauf locker","durationMin":30,"target":"Z2 136–149 bpm"},{"sport":"kraft","title":"Kraft 2","workout":"K2","durationMin":50,"details":["Schrägbank KH 3×8–12","Rudern Kabel 3×10–12","Butterfly ⟷ Reverse 3×12–15","Seitheben ⟷ Hammer 3×12–15","Trizeps Seil 2×10–15","Wadenheben 2×12–15/Seite","Dead Bug 2×10/Seite"]}]},
+  {"date":"2026-11-24","dayType":"Q-Rad-Tag","kcal":2400,"protein":140,"sessions":[{"sport":"rad","title":"Q1 Tempo 3×15","workout":"Zwift 03","durationMin":75,"target":"135–150 W (Zwift 141–157 W)","fuel":"KH-Mahlzeit 2–3 h vorher · Iso 50–60 g + Wasser","details":["10' einfahren","3×15' Tempo, 5' locker","Kadenz 85–90 in den Blöcken","10' ausfahren"]}]},
+  {"date":"2026-11-25","dayType":"Trainingstag","kcal":2400,"protein":140,"sessions":[{"sport":"kraft","title":"Kraft 1","workout":"K1","durationMin":55,"details":["Bankdrücken 3×6–8","Klimmzug ⟷ Dips 3×6–10","Bulg. Split Squat 2×8/Seite","Rumän. Kreuzheben 2×8","Seitheben ⟷ Curl 3×12–15","Ziel: fertig in ~60 Min"]}]},
+  {"date":"2026-11-26","dayType":"Trainingstag","kcal":2400,"protein":140,"sessions":[{"sport":"lauf","title":"Lauf Grundlage","durationMin":40,"target":"Z2 136–149 bpm","details":["Bei Schnee Laufband"]}]},
+  {"date":"2026-11-27","dayType":"Ruhetag","kcal":2200,"protein":140,"sessions":[]},
+  {"date":"2026-11-28","dayType":"Q-Rad-Tag","kcal":2400,"protein":140,"sessions":[{"sport":"rad","title":"Q2 Sweet Spot 3×8","workout":"Zwift 04","durationMin":65,"target":"150–160 W (Zwift 157–167 W)","fuel":"KH-Mahlzeit 2–3 h vorher · Iso 50–60 g + Wasser","details":["Block 2 > RPE 8 → Block 3 Z2","Kadenz 85–95"]},{"sport":"pump","title":"Pump zuhause","durationMin":20,"optional":true,"details":["3 Runden, 60–90 s Pause","Liegestütz 10–20","Seitheben 15–25","Curl 12–20","Stuhl-Dips 10–15"]}]},
+  {"date":"2026-11-29","dayType":"Langer Trainingstag","kcal":2750,"protein":140,"sessions":[{"sport":"rad","title":"Lange Fahrt Z2","workout":"Zwift 24","durationMin":135,"target":"96–129 W (Zwift 100–135 W)","fuel":"Iso ~50 g/h, schwächer + Wasser · ab Min 60 1 Gel · 750 ml+/h","details":["Gleichmäßig, keine Spitzen","Kadenz 85–95","Alle 15–20' trinken"]}]},
+  {"date":"2026-11-30","dayType":"Vortag FTP-Test","kcal":2750,"protein":140,"sessions":[{"sport":"lauf","title":"Lauf locker","durationMin":40,"target":"Z2 136–149 bpm","details":["Wirklich locker, Test morgen"]}]},
+  {"date":"2026-12-01","dayType":"FTP-Test","kcal":2600,"protein":140,"sessions":[{"sport":"rad","title":"FTP-Test","workout":"Zwift FTP","durationMin":45,"target":"Zwift-FTP vorher auf 180 W prüfen","fuel":"KH-Mahlzeit 2–3 h vorher · Iso 40–50 g · 1 Gel 15' vor Testblock","details":["Zwift „FTP Test (Standard)“","Polar H10 anlegen","Edge parallel aufzeichnen","20' gleichmäßig, nicht überpacen","LTHR = Ø HF letzte 10'","Ergebnis an Claude"]}]},
+  {"date":"2026-12-02","dayType":"Trainingstag","kcal":2400,"protein":140,"sessions":[{"sport":"kraft","title":"Kraft 1","workout":"K1","durationMin":55,"details":["Bankdrücken 3×6–8","Klimmzug ⟷ Dips 3×6–10","Bulg. Split Squat 2×8/Seite","Rumän. Kreuzheben 2×8","Seitheben ⟷ Curl 3×12–15","Ziel: fertig in ~60 Min"]}]},
+  {"date":"2026-12-03","dayType":"Ruhetag","kcal":2200,"protein":140,"sessions":[]},
+  {"date":"2026-12-04","dayType":"Trainingstag","kcal":2400,"protein":140,"sessions":[{"sport":"lauf","title":"Lauf locker","durationMin":30,"target":"Z2 136–149 bpm"},{"sport":"kraft","title":"Kraft 2","workout":"K2","durationMin":50,"details":["Schrägbank KH 3×8–12","Rudern Kabel 3×10–12","Butterfly ⟷ Reverse 3×12–15","Seitheben ⟷ Hammer 3×12–15","Trizeps Seil 2×10–15","Wadenheben 2×12–15/Seite","Dead Bug 2×10/Seite"]}]},
+  {"date":"2026-12-05","dayType":"Q-Rad-Tag","kcal":2400,"protein":140,"sessions":[{"sport":"rad","title":"Q2 Schwelle 4×6","workout":"Zwift 08","durationMin":65,"target":"95–105 % der neuen FTP","fuel":"KH-Mahlzeit 2–3 h vorher · Iso 50–60 g + Wasser","details":["Zwift-FTP nach Test aktualisiert?"]}]},
+  {"date":"2026-12-06","dayType":"Langer Trainingstag","kcal":2750,"protein":140,"sessions":[{"sport":"rad","title":"Lange Fahrt Z2","workout":"Zwift 24","durationMin":135,"target":"Z2 56–75 % FTP","fuel":"Iso ~50 g/h, schwächer + Wasser · ab Min 60 1 Gel · 750 ml+/h","details":["Gleichmäßig, keine Spitzen","Kadenz 85–95","Alle 15–20' trinken"]}]}
+ ]
 }
